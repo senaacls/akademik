@@ -134,3 +134,15 @@ function hapusdata($matakuliah)
 	return true;
 }
 
+function filterbygrade($nilai)
+{
+	global $conn;
+	
+	$sql = "select a.nama, a.fakultas, b.grade from mahasiswa a ";
+	$sql .= " inner join nilai b on a.nim = b.nim where b.grade = :nilai ";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute(array(":nilai"=>$nilai));
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+	return $result;
+}
